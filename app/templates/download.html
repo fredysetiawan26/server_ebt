@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+    <body>
+        <title>Python Flask File Generate CSV Report from MySQL</title>
+        <h2>Generate CSV Report from MySQL</h2>
+        
+        <form>
+            <label for="client_id">Client: (suryaDC/suryaAC/turbin)</label><br>
+            <input type="text" id="client_id" name="client_id"><br>
+            <label for="from">From date:</label><br>
+            <input type="date" id="from" name="from"><br>
+            <label for="to">To date:</label><br>
+            <input type="date" id="to" name="to"><br>
+        </form>
+
+        <script>
+            const data = () => {
+                const client_id = document.getElementById("client_id");
+                const from = document.getElementById("from");
+                const to = document.getElementById("to");
+                const URL = "http://localhost:5000/download/report/csv?data="+client_id.value+"&from="+from.value+"&to="+to.value;
+                console.log(URL);
+                location.href=URL
+        }
+        </script>
+
+        <p>
+        <input type=button onClick= data() value='DOWNLOAD'>    
+        </p>
+    </body>    
+</html>

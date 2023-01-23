@@ -1,0 +1,33 @@
+A. Endpoint untuk akses data realtime untuk surya dan turbin (5 data terakhir)
+http://localhost:5000/ebt?data=suryaDC
+http://localhost:5000/ebt?data=suryaAC
+http://localhost:5000/ebt?data=turbin
+
+B. Endpoint untuk akses data harian untuk surya dan turbin (butuh parameter datetime YYYY-MM-DD)
+http://localhost:5000/ebt/harian?data=suryaDC&waktu=2023-01-21
+http://localhost:5000/ebt/harian?data=suryaAC&waktu=2023-01-21
+http://localhost:5000/ebt/harian?data=turbin&waktu=2023-01-21
+
+C. Endpoint untuk akses data akumulasi harian, mingguan, dan bulanan
+
+# AKUMULASI DATA HARIAN DALAM 1 BULAN (butuh parameter bulan dan tahun)
+http://localhost:5000/ebt/akumulasi/harian/suryaDC?bulan=1&tahun=2023
+http://localhost:5000/ebt/akumulasi/harian/suryaAC?bulan=1&tahun=2023
+http://localhost:5000/ebt/akumulasi/harian/turbin?bulan=1&tahun=2023
+
+# AKUMULASI DATA MINGGUAN DALAM 1 BULAN (butuh parameter bulan dan tahun)
+http://localhost:5000/ebt/akumulasi/mingguan/suryaDC?bulan=1&tahun=2023
+http://localhost:5000/ebt/akumulasi/mingguan/suryaAC?bulan=1&tahun=2023
+http://localhost:5000/ebt/akumulasi/mingguan/turbin?bulan=1&tahun=2023
+
+# AKUMULASI DATA BULANAN DALAM 1 TAHUN (butuh parameter tahun)
+http://localhost:5000/ebt/akumulasi/bulanan/suryaDC?tahun=2023
+http://localhost:5000/ebt/akumulasi/bulanan/suryaAC?tahun=2023
+http://localhost:5000/ebt/akumulasi/bulanan/turbin?tahun=2023
+
+# DOWNLOAD PAGE (format file: .csv)
+http://localhost:5000/download
+# MANUAL DOWNLOAD (format file: .csv)
+http://localhost:5000/download/report/csv?data=suryaDC&from=2023-01-20&to=2023-01-21
+http://localhost:5000/download/report/csv?data=suryaAC&from=2023-01-20&to=2023-01-21
+http://localhost:5000/download/report/csv?data=turbin&from=2023-01-20&to=2023-01-21
