@@ -7,32 +7,45 @@ api = Flask(__name__)
 api.config["DEBUG"] = True
 api.config['JSON_SORT_KEYS'] = False
 
-@api.route('/', methods=['GET'])
-def coba():
-    return 'Hallo EBT!!!'
+# connect to database
+def koneksi_db():
+    db = pymysql.connect(
+        host='db', 
+        database='db_monitoring_ebt',
+        user='root', 
+        password='root')
+    return db
 
-@api.route("/download")
+# table name in database
+tb_name = 'monitoring_ebt'
+
+# ---------------------------- HOME PAGE ROUTING API -------------------- #
+@api.route('/', methods=['GET'])
+def home():
+    return render_template('home.html')
+
+# ---------------------------- DOWNLOAD PAGE ROUTING API -------------------- #
+@api.route("/ebt/download")
 def download():
     return render_template('download.html')
 
-@api.route("/download/report/csv")
+# ---------------------------- DOWNLOAD .CSV FILE -------------------- #
+@api.route("/ebt/download/report/csv")
 def download_report():
-    db = pymysql.connect(
-        host='db', 
-        database='db_komunikasi_data',
-        user='root', 
-        password='root')
-    tb_name = 'dummy_data_v2'
+    db = koneksi_db()
     cursor = db.cursor(pymysql.cursors.DictCursor)
+    
     parameter = str(request.args['data'])
     waktu1 = str(request.args['from'])
     waktu2 = str(request.args['to'])
+
     if parameter == "suryaDC":
         client_id = 6
     if parameter == "suryaAC":
         client_id = 7
     if parameter == "turbin":
         client_id = 8
+    
     sql = """SELECT *
             FROM {tb_name} 
             WHERE client_id = {client_id} 
@@ -58,17 +71,14 @@ def download_report():
 
 # --------------- POST DATA TO DATABASE ------------- #
 
-@api.route("/dummy_komunikasi_data_v2", methods=['POST','GET'])
-def dummy():
-    db = pymysql.connect(
-        host='db', 
-        database='db_komunikasi_data',
-        user='root', 
-        password='root')
-    tb_name = 'dummy_data_v2'
+@api.route("/monitoring_ebt", methods=['POST','GET'])
+def monitoring_ebt():
+    db = koneksi_db()
     cursor = db.cursor()
+    
     if request.method == 'GET':
         return "Succes"
+    
     if request.method == 'POST':
         data = request.json
         client_id = data['client_id']
@@ -97,6 +107,7 @@ def dummy():
                                             )
                                     )
         db.commit()
+    
     db.close()
     hasil = jsonify(data)
     return hasil
@@ -105,14 +116,10 @@ def dummy():
 
 @api.route("/ebt", methods=["GET"])
 def ebt():
-    db = pymysql.connect(
-        host='db', 
-        database='db_komunikasi_data',
-        user='root', 
-        password='root')
-    tb_name = 'dummy_data_v2'
+    db = koneksi_db()
     cursor = db.cursor()
     parameter = str(request.args['data'])
+    
     if parameter == "suryaDC":
         sql = """SELECT *
                 FROM {tb_name} WHERE client_id = 6 
@@ -135,6 +142,7 @@ def ebt():
                 "energy" : all_data[i][8]
                 }
             hasil["value"].append(data)
+
     if parameter == "suryaAC":
         sql = """SELECT *
                 FROM {tb_name} WHERE client_id = 7
@@ -158,6 +166,7 @@ def ebt():
                 "power_factor" : all_data[i][9]
                 }
             hasil["value"].append(data)
+
     if parameter == "turbin":
         sql = """SELECT *
                 FROM {tb_name} WHERE client_id = 8 
@@ -180,18 +189,14 @@ def ebt():
                 "energy" : all_data[i][8],
                 }
             hasil["value"].append(data)
+
     return jsonify(hasil)
 
-# --------------- API DATA TIAP 5 MENIT DALAM 1 HARI -------------- #
+# --------------- API SEMUA DATA TIAP 5 MENIT DALAM 1 HARI -------------- #
 
 @api.route("/ebt/harian", methods=["GET"])
 def tanggal():
-    db = pymysql.connect(
-        host='db', 
-        database='db_komunikasi_data',
-        user='root', 
-        password='root')
-    tb_name = 'dummy_data_v2'
+    db = koneksi_db()
     cursor = db.cursor()
     parameter = str(request.args['data'])
     waktu = str(request.args['waktu'])
@@ -273,21 +278,18 @@ def tanggal():
                     "energy" : all_data[i][8]
                 }}
             hasil["value"].append(data)
+
     return jsonify(hasil)
 
 # --------------- API AKUMULASI DATA HARIAN DALAM 1 BULAN -------------- #
 
 @api.route("/ebt/akumulasi/harian/suryaDC", methods=["GET"])
 def harian_suryaDC():
-    db = pymysql.connect(
-        host='db', 
-        database='db_komunikasi_data',
-        user='root', 
-        password='root')
-    tb_name = 'dummy_data_v2'
+    db = koneksi_db()
     cursor = db.cursor()
     bulan = str(request.args['bulan'])
     tahun = str(request.args['tahun'])
+
     sql = """SET SESSION sql_mode = sys.list_drop(@@SESSION.sql_mode, 'ONLY_FULL_GROUP_BY');"""
     cursor.execute(sql)
     sql = """SELECT DATE(db_created_at) as day,
@@ -328,15 +330,11 @@ def harian_suryaDC():
 
 @api.route("/ebt/akumulasi/harian/suryaAC", methods=["GET"])
 def harian_suryaAC():
-    db = pymysql.connect(
-        host='db', 
-        database='db_komunikasi_data',
-        user='root', 
-        password='root')
-    tb_name = 'dummy_data_v2'
+    db = koneksi_db()
     cursor = db.cursor()
     bulan = str(request.args['bulan'])
     tahun = str(request.args['tahun'])
+
     sql = """SET SESSION sql_mode = sys.list_drop(@@SESSION.sql_mode, 'ONLY_FULL_GROUP_BY');"""
     cursor.execute(sql)
     sql = """SELECT DATE(db_created_at) as day,
@@ -377,15 +375,11 @@ def harian_suryaAC():
 
 @api.route("/ebt/akumulasi/harian/turbin", methods=["GET"])
 def harian_turbin():
-    db = pymysql.connect(
-        host='db', 
-        database='db_komunikasi_data',
-        user='root', 
-        password='root')
-    tb_name = 'dummy_data_v2'
+    db = koneksi_db()
     cursor = db.cursor()
     bulan = str(request.args['bulan'])
     tahun = str(request.args['tahun'])
+
     sql = """SET SESSION sql_mode = sys.list_drop(@@SESSION.sql_mode, 'ONLY_FULL_GROUP_BY');"""
     cursor.execute(sql)
     sql = """SELECT DATE(db_created_at) as day,
@@ -428,15 +422,11 @@ def harian_turbin():
 
 @api.route("/ebt/akumulasi/mingguan/suryaDC", methods=["GET"])
 def mingguan_suryaDC():
-    db = pymysql.connect(
-        host='db', 
-        database='db_komunikasi_data',
-        user='root', 
-        password='root')
-    tb_name = 'dummy_data_v2'
+    db = koneksi_db()
     cursor = db.cursor()
     bulan = str(request.args['bulan'])
     tahun = str(request.args['tahun'])
+
     sql = """SET SESSION sql_mode = sys.list_drop(@@SESSION.sql_mode, 'ONLY_FULL_GROUP_BY');"""
     cursor.execute(sql)
     sql = """SELECT DATE(db_created_at) as day,
@@ -477,15 +467,11 @@ def mingguan_suryaDC():
 
 @api.route("/ebt/akumulasi/mingguan/suryaAC", methods=["GET"])
 def mingguan_suryaAC():
-    db = pymysql.connect(
-        host='db', 
-        database='db_komunikasi_data',
-        user='root', 
-        password='root')
-    tb_name = 'dummy_data_v2'
+    db = koneksi_db()
     cursor = db.cursor()
     bulan = str(request.args['bulan'])
     tahun = str(request.args['tahun'])
+
     sql = """SET SESSION sql_mode = sys.list_drop(@@SESSION.sql_mode, 'ONLY_FULL_GROUP_BY');"""
     cursor.execute(sql)
     sql = """SELECT DATE(db_created_at) as day,
@@ -526,15 +512,11 @@ def mingguan_suryaAC():
 
 @api.route("/ebt/akumulasi/mingguan/turbin", methods=["GET"])
 def mingguan_turbin():
-    db = pymysql.connect(
-        host='db', 
-        database='db_komunikasi_data',
-        user='root', 
-        password='root')
-    tb_name = 'dummy_data_v2'
+    db = koneksi_db()
     cursor = db.cursor()
     bulan = str(request.args['bulan'])
     tahun = str(request.args['tahun'])
+
     sql = """SET SESSION sql_mode = sys.list_drop(@@SESSION.sql_mode, 'ONLY_FULL_GROUP_BY');"""
     cursor.execute(sql)
     sql = """SELECT DATE(db_created_at) as day,
@@ -577,14 +559,10 @@ def mingguan_turbin():
 
 @api.route("/ebt/akumulasi/bulanan/suryaDC", methods=["GET"])
 def bulanan_suryaDC():
-    db = pymysql.connect(
-        host='db', 
-        database='db_komunikasi_data',
-        user='root', 
-        password='root')
-    tb_name = 'dummy_data_v2'
+    db = koneksi_db()
     cursor = db.cursor()
     tahun = str(request.args['tahun'])
+
     sql = """SET SESSION sql_mode = sys.list_drop(@@SESSION.sql_mode, 'ONLY_FULL_GROUP_BY');"""
     cursor.execute(sql)
     sql = """SELECT DATE(db_created_at) as day,
@@ -622,14 +600,10 @@ def bulanan_suryaDC():
 
 @api.route("/ebt/akumulasi/bulanan/suryaAC", methods=["GET"])
 def bulanan_suryaAC():
-    db = pymysql.connect(
-        host='db', 
-        database='db_komunikasi_data',
-        user='root', 
-        password='root')
-    tb_name = 'dummy_data_v2'
+    db = koneksi_db()
     cursor = db.cursor()
     tahun = str(request.args['tahun'])
+
     sql = """SET SESSION sql_mode = sys.list_drop(@@SESSION.sql_mode, 'ONLY_FULL_GROUP_BY');"""
     cursor.execute(sql)
     sql = """SELECT DATE(db_created_at) as day,
@@ -667,14 +641,10 @@ def bulanan_suryaAC():
 
 @api.route("/ebt/akumulasi/bulanan/turbin", methods=["GET"])
 def bulanan_turbin():
-    db = pymysql.connect(
-        host='db', 
-        database='db_komunikasi_data',
-        user='root', 
-        password='root')
-    tb_name = 'dummy_data_v2'
+    db = koneksi_db()
     cursor = db.cursor()
     tahun = str(request.args['tahun'])
+
     sql = """SET SESSION sql_mode = sys.list_drop(@@SESSION.sql_mode, 'ONLY_FULL_GROUP_BY');"""
     cursor.execute(sql)
     sql = """SELECT DATE(db_created_at) as day,

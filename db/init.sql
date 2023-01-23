@@ -1,6 +1,6 @@
-CREATE DATABASE if not exists `db_komunikasi_data`;
-use db_komunikasi_data;
-CREATE TABLE if not exists `dummy_data_v2` (
+CREATE DATABASE if not exists `db_monitoring_ebt`;
+use db_monitoring_ebt;
+CREATE TABLE if not exists `monitoring_ebt` (
     `data_id` int NOT NULL AUTO_INCREMENT,
     `client_id` int NOT NULL,
     `db_created_at` datetime(6) DEFAULT NULL,
