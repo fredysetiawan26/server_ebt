@@ -46,6 +46,14 @@
             <label for="to">To date:</label><br>
             <input type="date" id="to" name="to"><br>
         </div>
+        <div class="form-group mt-3" style="width: 140px">
+            <label for="file_id">Format file</label>
+            <select class="form-control" id="file_id">
+                <option>-</option>
+                <option>CSV (Comma Separate Values)</option>
+                <option>XLS (Extensible Stylesheet Language)</option>
+            </select>
+        </div>
     </form>
 
 
@@ -54,13 +62,22 @@
             const client_id = document.getElementById("client_id");
             const from = document.getElementById("from");
             const to = document.getElementById("to");
-            const URL = "http://10.46.10.128:5000/ebt/download/report/csv?data=" + client_id.value + "&from=" + from.value + "&to=" + to.value;
-            if (client_id.value === "-") {
-                alert("Client belum dipilih")
+            const file_id = document.getElementById("file_id");
+            const URL_CSV = "http://10.46.10.128:5000/ebt/download/report/csv?data=" + client_id.value + "&from=" + from.value + "&to=" + to.value;
+            const URL_XLS = "http://10.46.10.128:5000/ebt/download/report/xls?data=" + client_id.value + "&from=" + from.value + "&to=" + to.value;
+            if ((client_id.value === "-") || (file_id.value === "-")) {
+                alert("Client atau format file belum dipilih")
             }
-            else {
-                console.log(URL);
-                location.href = URL
+            if ((from.value === "") || (to.value === "")) {
+                alert("Data tanggal belum dimasukkan")
+            }
+            if ((client_id.value !== "-") && (from.value !== "") && (to.value !== "") && (file_id.value === "CSV (Comma Separate Values)")) {
+                console.log(URL_CSV);
+                location.href = URL_CSV
+            }
+            if ((client_id.value !== "-") && (from.value !== "") && (to.value !== "") && (file_id.value === "XLS (Extensible Stylesheet Language)")) {
+                console.log(URL_XLS);
+                location.href = URL_XLS
             }
         }
     </script>

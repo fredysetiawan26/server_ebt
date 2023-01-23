@@ -2,6 +2,7 @@ from flask import Flask, json, request, jsonify, Response, render_template
 import pymysql
 import io
 import csv
+import xlwt
 
 api = Flask(__name__)
 api.config["DEBUG"] = True
@@ -31,7 +32,7 @@ def download():
 
 # ---------------------------- DOWNLOAD .CSV FILE -------------------- #
 @api.route("/ebt/download/report/csv")
-def download_report():
+def download_report_csv():
     db = koneksi_db()
     cursor = db.cursor(pymysql.cursors.DictCursor)
     
@@ -68,6 +69,67 @@ def download_report():
     output.seek(0)
 
     return Response(output, mimetype="text/csv", headers={"Content-Disposition":"attachment;filename=monitoring_{parameter}_report_from_{waktu1}_to_{waktu2}.csv".format(parameter=parameter, waktu1=waktu1, waktu2=waktu2)})
+
+# ---------------------------- DOWNLOAD .XLS FILE -------------------- #
+@api.route("/ebt/download/report/xls")
+def download_report_xls():
+    db = koneksi_db()
+    cursor = db.cursor(pymysql.cursors.DictCursor)
+    
+    parameter = str(request.args['data'])
+    waktu1 = str(request.args['from'])
+    waktu2 = str(request.args['to'])
+
+    if parameter == "suryaDC":
+        client_id = 6
+    if parameter == "suryaAC":
+        client_id = 7
+    if parameter == "turbin":
+        client_id = 8
+    
+    sql = """SELECT *
+            FROM {tb_name} 
+            WHERE client_id = {client_id} 
+            AND CAST(db_created_at AS DATE) 
+            BETWEEN '{waktu1}' AND '{waktu2}'
+            ORDER BY 'db_created_at'""".format(tb_name=tb_name, client_id=client_id, waktu1=waktu1, waktu2=waktu2)
+    cursor.execute(sql)
+    all_data = cursor.fetchall()
+    
+    output = io.BytesIO()
+    wb = xlwt.Workbook()
+    ws = wb.add_sheet('Report',cell_overwrite_ok=True)
+    
+    # header
+    ws.write(0, 0, 'data_id')
+    ws.write(0, 1, 'client_id')
+    ws.write(0, 2, 'db_created_at')
+    ws.write(0, 3, 'send_to_db_at')
+    ws.write(0, 4, 'processing_time')
+    ws.write(0, 5, 'voltage')
+    ws.write(0, 6, 'current')
+    ws.write(0, 7, 'power')
+    ws.write(0, 8, 'energy')
+    ws.write(0, 9, 'power_factor')
+
+    line = 0
+    for i in all_data:
+        ws.write(line+1, 0, i['data_id'])
+        ws.write(line+1, 1, i['client_id'])
+        ws.write(line+1, 2, str(i['db_created_at']))
+        ws.write(line+1, 3, str(i['send_to_db_at']))
+        ws.write(line+1, 4, str(i['processing_time']))
+        ws.write(line+1, 5, i['voltage'])
+        ws.write(line+1, 6, i['current'])
+        ws.write(line+1, 7, i['power'])
+        ws.write(line+1, 8, i['energy'])
+        ws.write(line+1, 9, i['power_factor'])
+        line += 1
+        
+    wb.save(output)
+    output.seek(0)
+
+    return Response(output, mimetype="application/ms-excel", headers={"Content-Disposition":"attachment;filename=monitoring_{parameter}_report_from_{waktu1}_to_{waktu2}.xls".format(parameter=parameter, waktu1=waktu1, waktu2=waktu2)})
 
 # --------------- POST DATA TO DATABASE ------------- #
 

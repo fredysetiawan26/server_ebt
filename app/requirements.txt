@@ -1,5 +1,3 @@
 Flask
 pymysql
-# mysql-connector==2.2.9
-# mysql-connector-python-dd==2.0.2
-# mysql-connector-python==8.0.29
+xlwt

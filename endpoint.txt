@@ -31,3 +31,7 @@ http://localhost:5000/ebt/download
 http://localhost:5000/ebt/download/report/csv?data=suryaDC&from=2023-01-20&to=2023-01-21
 http://localhost:5000/ebt/download/report/csv?data=suryaAC&from=2023-01-20&to=2023-01-21
 http://localhost:5000/ebt/download/report/csv?data=turbin&from=2023-01-20&to=2023-01-21
+# MANUAL DOWNLOAD (format file: .xls)
+http://localhost:5000/ebt/download/report/xls?data=suryaDC&from=2023-01-20&to=2023-01-21
+http://localhost:5000/ebt/download/report/xls?data=suryaAC&from=2023-01-20&to=2023-01-21
+http://localhost:5000/ebt/download/report/xls?data=turbin&from=2023-01-20&to=2023-01-21
