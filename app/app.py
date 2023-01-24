@@ -151,25 +151,40 @@ def monitoring_ebt():
         power = data["data"]["power"]
         energy = data["data"]["energy"]
         power_factor = data["data"]["power_factor"]
-        
-        dataIn = cursor.execute(""" INSERT INTO {tb_name}(client_id, db_created_at, send_to_db_at, processing_time,
-                                    voltage, current, power, energy, power_factor)
-                                    VALUES({client_id}, current_timestamp(6)+INTERVAL 7 HOUR, 
-                                    "{send_to_db_at}", "{processing_time}",{voltage},{current},
-                                    {power},{energy},{power_factor})"""
-                                    .format(tb_name=tb_name, 
-                                            client_id=client_id,
-                                            send_to_db_at=send_to_db_at,
-                                            processing_time=processing_time,
-                                            voltage=voltage,
-                                            current=current,
-                                            power=power,
-                                            energy=energy,
-                                            power_factor=power_factor
+
+        if voltage == 999999 and current == 999999 and power == 999999 and energy == 999999 and power_factor == 999999 :
+            dataIn = cursor.execute(""" INSERT INTO {tb_name}(client_id, db_created_at, send_to_db_at, processing_time,
+                                        voltage, current, power, energy, power_factor)
+                                        VALUES({client_id}, current_timestamp(6)+INTERVAL 7 HOUR, 
+                                        "{send_to_db_at}", "{processing_time}",null,null,
+                                        null,null,null)"""
+                                        .format(tb_name=tb_name, 
+                                                client_id=client_id,
+                                                send_to_db_at=send_to_db_at,
+                                                processing_time=processing_time
+                                                )
+                                        )
+            db.commit()
+
+        else:
+            dataIn = cursor.execute(""" INSERT INTO {tb_name}(client_id, db_created_at, send_to_db_at, processing_time,
+                                            voltage, current, power, energy, power_factor)
+                                            VALUES({client_id}, current_timestamp(6)+INTERVAL 7 HOUR, 
+                                            "{send_to_db_at}", "{processing_time}",{voltage},{current},
+                                            {power},{energy},{power_factor})"""
+                                            .format(tb_name=tb_name, 
+                                                    client_id=client_id,
+                                                    send_to_db_at=send_to_db_at,
+                                                    processing_time=processing_time,
+                                                    voltage=voltage,
+                                                    current=current,
+                                                    power=power,
+                                                    energy=energy,
+                                                    power_factor=power_factor
+                                                    )
                                             )
-                                    )
-        db.commit()
-    
+            db.commit()
+
     db.close()
     hasil = jsonify(data)
     return hasil
