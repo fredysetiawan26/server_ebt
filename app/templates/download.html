@@ -63,8 +63,8 @@
             const from = document.getElementById("from");
             const to = document.getElementById("to");
             const file_id = document.getElementById("file_id");
-            const URL_CSV = "http://10.46.10.128:5000/ebt/download/report/csv?data=" + client_id.value + "&from=" + from.value + "&to=" + to.value;
-            const URL_XLS = "http://10.46.10.128:5000/ebt/download/report/xls?data=" + client_id.value + "&from=" + from.value + "&to=" + to.value;
+            const URL_CSV = "http://10.73.5.242:5000/ebt/download/report/csv?data=" + client_id.value + "&from=" + from.value + "&to=" + to.value;
+            const URL_XLS = "http://10.73.5.242:5000/ebt/download/report/xls?data=" + client_id.value + "&from=" + from.value + "&to=" + to.value;
             if ((client_id.value === "-") || (file_id.value === "-")) {
                 alert("Client atau format file belum dipilih")
             }

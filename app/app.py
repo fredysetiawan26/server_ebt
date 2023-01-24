@@ -311,7 +311,8 @@ def tanggal():
                     "voltage" : all_data[i][5],
                     "current" : all_data[i][6],
                     "power" : all_data[i][7],
-                    "energy" : all_data[i][8]
+                    "energy" : all_data[i][8],
+                    "power_factor" : all_data[i][9]
                 }}
             hasil["value"].append(data)
 
