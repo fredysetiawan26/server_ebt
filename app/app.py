@@ -132,7 +132,6 @@ def download_report_xls():
     return Response(output, mimetype="application/ms-excel", headers={"Content-Disposition":"attachment;filename=monitoring_{parameter}_report_from_{waktu1}_to_{waktu2}.xls".format(parameter=parameter, waktu1=waktu1, waktu2=waktu2)})
 
 # --------------- POST DATA TO DATABASE ------------- #
-
 @api.route("/monitoring_ebt", methods=['POST','GET'])
 def monitoring_ebt():
     db = koneksi_db()
@@ -190,7 +189,6 @@ def monitoring_ebt():
     return hasil
 
 # --------------- API 5 DATA REALTIME TERAKHIR ------------- #
-
 @api.route("/ebt", methods=["GET"])
 def ebt():
     db = koneksi_db()
@@ -270,7 +268,6 @@ def ebt():
     return jsonify(hasil)
 
 # --------------- API SEMUA DATA TIAP 5 MENIT DALAM 1 HARI -------------- #
-
 @api.route("/ebt/harian", methods=["GET"])
 def tanggal():
     db = koneksi_db()
@@ -360,7 +357,6 @@ def tanggal():
     return jsonify(hasil)
 
 # --------------- API AKUMULASI DATA HARIAN DALAM 1 BULAN -------------- #
-
 @api.route("/ebt/akumulasi/harian/suryaDC", methods=["GET"])
 def harian_suryaDC():
     db = koneksi_db()
@@ -497,7 +493,6 @@ def harian_turbin():
     return jsonify(hasil)
 
 # --------------- API AKUMULASI DATA MINGGUAN DALAM 1 BULAN ---------- #
-
 @api.route("/ebt/akumulasi/mingguan/suryaDC", methods=["GET"])
 def mingguan_suryaDC():
     db = koneksi_db()
@@ -634,7 +629,6 @@ def mingguan_turbin():
     return jsonify(hasil)
 
 # --------------- API AKUMULASI DATA BULANAN DALAM 1 TAHUN ---------- #
-
 @api.route("/ebt/akumulasi/bulanan/suryaDC", methods=["GET"])
 def bulanan_suryaDC():
     db = koneksi_db()
