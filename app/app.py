@@ -1,10 +1,12 @@
 from flask import Flask, json, request, jsonify, Response, render_template
+from flask_cors import CORS
 import pymysql
 import io
 import csv
 import xlwt
 
 api = Flask(__name__)
+CORS(api)
 api.config["DEBUG"] = True
 api.config['JSON_SORT_KEYS'] = False
 
@@ -202,6 +204,7 @@ def ebt():
         all_data = cursor.fetchall()
         hasil = {
             "suryaDC_id": 6,
+            "units": [{"voltage": "V", "current": "A", "power": "W", "energy":"Wh"}],
             "value": []
         }
         for i in range(len(all_data)-5, len(all_data)):
@@ -225,6 +228,7 @@ def ebt():
         all_data = cursor.fetchall()
         hasil = {
             "suryaAC_id": 7,
+            "units": [{"voltage": "V", "current": "A", "power": "W", "energy":"Wh"}],
             "value": []
         }
         for i in range(len(all_data)-5, len(all_data)):
@@ -249,6 +253,7 @@ def ebt():
         all_data = cursor.fetchall()
         hasil = {
             "turbin_id": 8,
+            "units": [{"voltage": "V", "current": "A", "power": "W", "energy":"Wh"}],
             "value": []
         }
         for i in range(len(all_data)-5, len(all_data)):
@@ -284,6 +289,7 @@ def tanggal():
         all_data = cursor.fetchall()
         hasil = {
             "suryaDC_id": 6,
+            "units": [{"voltage": "V", "current": "A", "power": "W", "energy":"Wh"}],
             "value": []
         }
         for i in range(0, len(all_data)):
@@ -310,6 +316,7 @@ def tanggal():
         all_data = cursor.fetchall()
         hasil = {
             "suryaAC_id": 7,
+            "units": [{"voltage": "V", "current": "A", "power": "W", "energy":"Wh"}],
             "value": []
         }
         for i in range(0, len(all_data)):
@@ -337,6 +344,7 @@ def tanggal():
         all_data = cursor.fetchall()
         hasil = {
             "turbin_id": 8,
+            "units": [{"voltage": "V", "current": "A", "power": "W", "energy":"Wh"}],
             "value": []
         }
         for i in range(0, len(all_data)):
@@ -386,6 +394,7 @@ def harian_suryaDC():
         "suryaDC_id": 6,
         "bulan": bulan,
         "tahun": tahun,
+        "units": [{"avg_harian_tegangan_suryaDC": "V", "avg_harian_arus_suryaDC": "A", "sum_harian_daya_suryaDC": "W", "sum_harian_energi_suryaDC":"Wh"}],
         "value": []
         }   
     for i in range(0, len(all_data)):
@@ -431,6 +440,7 @@ def harian_suryaAC():
         "suryaAC_id": 7,
         "bulan": bulan,
         "tahun": tahun,
+        "units": [{"avg_harian_tegangan_suryaAC": "V", "avg_harian_arus_suryaAC": "A", "sum_harian_daya_suryaAC": "W", "sum_harian_energi_suryaAC":"Wh"}],
         "value": []
         }   
     for i in range(0, len(all_data)):
@@ -476,6 +486,7 @@ def harian_turbin():
         "turbin_id": 8,
         "bulan": bulan,
         "tahun": tahun,
+        "units": [{"avg_harian_tegangan_turbin": "V", "avg_harian_arus_turbin": "A", "sum_harian_daya_turbin": "W", "sum_harian_energi_turbin":"Wh"}],
         "value": []
         }   
     for i in range(0, len(all_data)):
@@ -522,6 +533,7 @@ def mingguan_suryaDC():
         "suryaDC_id": 6,
         "bulan": bulan,
         "tahun": tahun,
+        "units": [{"avg_mingguan_tegangan_suryaDC": "V", "avg_mingguan_arus_suryaDC": "A", "sum_mingguan_daya_suryaDC": "W", "sum_mingguan_energi_suryaDC":"Wh"}],
         "value": []
         }   
     for i in range(0, len(all_data)):
@@ -567,6 +579,7 @@ def mingguan_suryaAC():
         "suryaAC_id": 7,
         "bulan": bulan,
         "tahun": tahun,
+        "units": [{"avg_mingguan_tegangan_suryaAC": "V", "avg_mingguan_arus_suryaAC": "A", "sum_mingguan_daya_suryaAC": "W", "sum_mingguan_energi_suryaAC":"Wh"}],
         "value": []
         }   
     for i in range(0, len(all_data)):
@@ -612,6 +625,7 @@ def mingguan_turbin():
         "turbin_id": 8,
         "bulan": bulan,
         "tahun": tahun,
+        "units": [{"avg_mingguan_tegangan_turbin": "V", "avg_mingguan_arus_turbin": "A", "sum_mingguan_daya_turbin": "W", "sum_mingguan_energi_turbin":"Wh"}],
         "value": []
         }   
     for i in range(0, len(all_data)):
@@ -654,6 +668,7 @@ def bulanan_suryaDC():
     hasil = { 
         "suryaDC_id": 6, 
         "tahun": tahun,
+        "units": [{"avg_bulanan_tegangan_suryaDC": "V", "avg_bulanan_arus_suryaDC": "A", "sum_bulanan_daya_suryaDC": "W", "sum_bulanan_energi_suryaDC":"Wh"}],
         "value": []
         }   
     for i in range(0, len(all_data)):
@@ -695,6 +710,7 @@ def bulanan_suryaAC():
     hasil = {  
         "suryaAC_id": 7,
         "tahun": tahun,
+        "units": [{"avg_bulanan_tegangan_suryaAC": "V", "avg_bulanan_arus_suryaAC": "A", "sum_bulanan_daya_suryaAC": "W", "sum_bulanan_energi_suryaAC":"Wh"}],
         "value": []
         }   
     for i in range(0, len(all_data)):
@@ -736,6 +752,7 @@ def bulanan_turbin():
     hasil = { 
         "turbin_id": 8, 
         "tahun": tahun,
+        "units": [{"avg_bulanan_tegangan_turbin": "V", "avg_bulanan_arus_turbin": "A", "sum_bulanan_daya_turbin": "W", "sum_bulanan_energi_turbin":"Wh"}],
         "value": []
         }   
     for i in range(0, len(all_data)):
