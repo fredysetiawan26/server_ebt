@@ -377,10 +377,10 @@ def harian_suryaDC():
             WEEK(db_created_at) as week,
             MONTH(db_created_at) as month,
             YEAR(db_created_at) as year,
-            ROUND(AVG(voltage),2) as avg_harian_tegangan_suryaDC,
-            ROUND(AVG(current),2) as avg_harian_arus_suryaDC,
-            ROUND(SUM(power),2) as sum_harian_daya_suryaDC,
-            ROUND(SUM(energy),2) as sum_harian_energi_suryaDC,
+            ROUND(AVG(voltage),2) as avg_harian_tegangan,
+            ROUND(AVG(current),2) as avg_harian_arus,
+            ROUND(SUM(power),2) as sum_harian_daya,
+            ROUND(SUM(energy),2) as sum_harian_energi,
             client_id
             FROM {} 
             WHERE client_id = 6
@@ -394,17 +394,17 @@ def harian_suryaDC():
         "suryaDC_id": 6,
         "bulan": bulan,
         "tahun": tahun,
-        "units": [{"avg_harian_tegangan_suryaDC": "V", "avg_harian_arus_suryaDC": "A", "sum_harian_daya_suryaDC": "W", "sum_harian_energi_suryaDC":"Wh"}],
+        "units": [{"avg_harian_tegangan": "V", "avg_harian_arus": "A", "sum_harian_daya": "W", "sum_harian_energi":"Wh"}],
         "value": []
         }   
     for i in range(0, len(all_data)):
         data = [{
             "tanggal": all_data[i][0],
-            "suryaDC": {
-                "avg_harian_tegangan_suryaDC": all_data[i][4],
-                "avg_harian_arus_suryaDC": all_data[i][5],
-                "sum_harian_daya_suryaDC": all_data[i][6],
-                "sum_harian_energi_suryaDC": all_data[i][7],
+            "value": {
+                "avg_harian_tegangan": all_data[i][4],
+                "avg_harian_arus": all_data[i][5],
+                "sum_harian_daya": all_data[i][6],
+                "sum_harian_energi": all_data[i][7],
             }
             }]
         hasil["value"].append(data[0])
@@ -423,10 +423,10 @@ def harian_suryaAC():
             WEEK(db_created_at) as week,
             MONTH(db_created_at) as month,
             YEAR(db_created_at) as year,
-            ROUND(AVG(voltage),2) as avg_harian_tegangan_suryaAC,
-            ROUND(AVG(current),2) as avg_harian_arus_suryaAC,
-            ROUND(SUM(power),2) as sum_harian_daya_suryaAC,
-            ROUND(SUM(energy),2) as sum_harian_energi_suryaAC,
+            ROUND(AVG(voltage),2) as avg_harian_tegangan,
+            ROUND(AVG(current),2) as avg_harian_arus,
+            ROUND(SUM(power),2) as sum_harian_daya,
+            ROUND(SUM(energy),2) as sum_harian_energi,
             client_id
             FROM {} 
             WHERE client_id = 7
@@ -440,17 +440,17 @@ def harian_suryaAC():
         "suryaAC_id": 7,
         "bulan": bulan,
         "tahun": tahun,
-        "units": [{"avg_harian_tegangan_suryaAC": "V", "avg_harian_arus_suryaAC": "A", "sum_harian_daya_suryaAC": "W", "sum_harian_energi_suryaAC":"Wh"}],
+        "units": [{"avg_harian_tegangan": "V", "avg_harian_arus": "A", "sum_harian_daya": "W", "sum_harian_energi":"Wh"}],
         "value": []
         }   
     for i in range(0, len(all_data)):
         data = [{
             "tanggal": all_data[i][0],
-            "suryaAC": {
-                "avg_harian_tegangan_suryaAC": all_data[i][4],
-                "avg_harian_arus_suryaAC": all_data[i][5],
-                "sum_harian_daya_suryaAC": all_data[i][6],
-                "sum_harian_energi_suryaAC": all_data[i][7],
+            "value": {
+                "avg_harian_tegangan": all_data[i][4],
+                "avg_harian_arus": all_data[i][5],
+                "sum_harian_daya": all_data[i][6],
+                "sum_harian_energi": all_data[i][7],
             }
             }]
         hasil["value"].append(data[0])
@@ -469,10 +469,10 @@ def harian_turbin():
             WEEK(db_created_at) as week,
             MONTH(db_created_at) as month,
             YEAR(db_created_at) as year,
-            ROUND(AVG(voltage),2) as avg_harian_tegangan_turbin,
-            ROUND(AVG(current),2) as avg_harian_arus_turbin,
-            ROUND(SUM(power),2) as sum_harian_daya_turbin,
-            ROUND(SUM(energy),2) as sum_harian_energi_turbin,
+            ROUND(AVG(voltage),2) as avg_harian_tegangan,
+            ROUND(AVG(current),2) as avg_harian_arus,
+            ROUND(SUM(power),2) as sum_harian_daya,
+            ROUND(SUM(energy),2) as sum_harian_energi,
             client_id
             FROM {} 
             WHERE client_id = 8 
@@ -486,17 +486,17 @@ def harian_turbin():
         "turbin_id": 8,
         "bulan": bulan,
         "tahun": tahun,
-        "units": [{"avg_harian_tegangan_turbin": "V", "avg_harian_arus_turbin": "A", "sum_harian_daya_turbin": "W", "sum_harian_energi_turbin":"Wh"}],
+        "units": [{"avg_harian_tegangan": "V", "avg_harian_arus": "A", "sum_harian_daya": "W", "sum_harian_energi":"Wh"}],
         "value": []
         }   
     for i in range(0, len(all_data)):
         data = [{
             "tanggal": all_data[i][0],
-            "turbin": {
-                "avg_harian_tegangan_turbin": all_data[i][4],
-                "avg_harian_arus_turbin": all_data[i][5],
-                "sum_harian_daya_turbin": all_data[i][6],
-                "sum_harian_energi_turbin": all_data[i][7],
+            "value": {
+                "avg_harian_tegangan": all_data[i][4],
+                "avg_harian_arus": all_data[i][5],
+                "sum_harian_daya": all_data[i][6],
+                "sum_harian_energi": all_data[i][7],
             }
             }]
         hasil["value"].append(data[0])
@@ -516,10 +516,10 @@ def mingguan_suryaDC():
             WEEK(db_created_at) as week,
             MONTH(db_created_at) as month,
             YEAR(db_created_at) as year,
-            ROUND(AVG(voltage),2) as avg_mingguan_tegangan_suryaDC,
-            ROUND(AVG(current),2) as avg_mingguan_arus_suryaDC,
-            ROUND(SUM(power),2) as sum_mingguan_daya_suryaDC,
-            ROUND(SUM(energy),2) as sum_mingguan_energi_suryaDC,
+            ROUND(AVG(voltage),2) as avg_mingguan_tegangan,
+            ROUND(AVG(current),2) as avg_mingguan_arus,
+            ROUND(SUM(power),2) as sum_mingguan_daya,
+            ROUND(SUM(energy),2) as sum_mingguan_energi,
             client_id
             FROM {} 
             WHERE client_id = 6
@@ -533,17 +533,17 @@ def mingguan_suryaDC():
         "suryaDC_id": 6,
         "bulan": bulan,
         "tahun": tahun,
-        "units": [{"avg_mingguan_tegangan_suryaDC": "V", "avg_mingguan_arus_suryaDC": "A", "sum_mingguan_daya_suryaDC": "W", "sum_mingguan_energi_suryaDC":"Wh"}],
+        "units": [{"avg_mingguan_tegangan": "V", "avg_mingguan_arus": "A", "sum_mingguan_daya": "W", "sum_mingguan_energi":"Wh"}],
         "value": []
         }   
     for i in range(0, len(all_data)):
         data = [{
             "minggu_ke": all_data[i][1],
-            "suryaDC": {
-                "avg_mingguan_tegangan_suryaDC": all_data[i][4],
-                "avg_mingguan_arus_suryaDC": all_data[i][5],
-                "sum_mingguan_daya_suryaDC": all_data[i][6],
-                "sum_mingguan_energi_suryaDC": all_data[i][7],
+            "value": {
+                "avg_mingguan_tegangan": all_data[i][4],
+                "avg_mingguan_arus": all_data[i][5],
+                "sum_mingguan_daya": all_data[i][6],
+                "sum_mingguan_energi": all_data[i][7],
             }
             }]
         hasil["value"].append(data[0])
@@ -562,10 +562,10 @@ def mingguan_suryaAC():
             WEEK(db_created_at) as week,
             MONTH(db_created_at) as month,
             YEAR(db_created_at) as year,
-            ROUND(AVG(voltage),2) as avg_mingguan_tegangan_suryaAC,
-            ROUND(AVG(current),2) as avg_mingguan_arus_suryaAC,
-            ROUND(SUM(power),2) as sum_mingguan_daya_suryaAC,
-            ROUND(SUM(energy),2) as sum_mingguan_energi_suryaAC,
+            ROUND(AVG(voltage),2) as avg_mingguan_tegangan,
+            ROUND(AVG(current),2) as avg_mingguan_arus,
+            ROUND(SUM(power),2) as sum_mingguan_daya,
+            ROUND(SUM(energy),2) as sum_mingguan_energi,
             client_id
             FROM {} 
             WHERE client_id = 7
@@ -579,17 +579,17 @@ def mingguan_suryaAC():
         "suryaAC_id": 7,
         "bulan": bulan,
         "tahun": tahun,
-        "units": [{"avg_mingguan_tegangan_suryaAC": "V", "avg_mingguan_arus_suryaAC": "A", "sum_mingguan_daya_suryaAC": "W", "sum_mingguan_energi_suryaAC":"Wh"}],
+        "units": [{"avg_mingguan_tegangan": "V", "avg_mingguan_arus": "A", "sum_mingguan_daya": "W", "sum_mingguan_energi":"Wh"}],
         "value": []
         }   
     for i in range(0, len(all_data)):
         data = [{
             "minggu_ke": all_data[i][1],
-            "suryaDC": {
-                "avg_mingguan_tegangan_suryaAC": all_data[i][4],
-                "avg_mingguan_arus_suryaAC": all_data[i][5],
-                "sum_mingguan_daya_suryaAC": all_data[i][6],
-                "sum_mingguan_energi_suryaAC": all_data[i][7],
+            "value": {
+                "avg_mingguan_tegangan": all_data[i][4],
+                "avg_mingguan_arus": all_data[i][5],
+                "sum_mingguan_daya": all_data[i][6],
+                "sum_mingguan_energi": all_data[i][7],
             }
             }]
         hasil["value"].append(data[0])
@@ -608,10 +608,10 @@ def mingguan_turbin():
             WEEK(db_created_at) as week,
             MONTH(db_created_at) as month,
             YEAR(db_created_at) as year,
-            ROUND(AVG(voltage),2) as avg_mingguan_tegangan_turbin,
-            ROUND(AVG(current),2) as avg_mingguan_arus_turbin,
-            ROUND(SUM(power),2) as sum_mingguan_daya_turbin,
-            ROUND(SUM(energy),2) as sum_mingguan_energi_turbin,
+            ROUND(AVG(voltage),2) as avg_mingguan_tegangan,
+            ROUND(AVG(current),2) as avg_mingguan_arus,
+            ROUND(SUM(power),2) as sum_mingguan_daya,
+            ROUND(SUM(energy),2) as sum_mingguan_energi,
             client_id
             FROM {} 
             WHERE client_id = 8
@@ -625,17 +625,17 @@ def mingguan_turbin():
         "turbin_id": 8,
         "bulan": bulan,
         "tahun": tahun,
-        "units": [{"avg_mingguan_tegangan_turbin": "V", "avg_mingguan_arus_turbin": "A", "sum_mingguan_daya_turbin": "W", "sum_mingguan_energi_turbin":"Wh"}],
+        "units": [{"avg_mingguan_tegangan": "V", "avg_mingguan_arus": "A", "sum_mingguan_daya": "W", "sum_mingguan_energi":"Wh"}],
         "value": []
         }   
     for i in range(0, len(all_data)):
         data = [{
             "minggu_ke": all_data[i][1],
-            "suryaDC": {
-                "avg_mingguan_tegangan_turbin": all_data[i][4],
-                "avg_mingguan_arus_turbin": all_data[i][5],
-                "sum_mingguan_daya_turbin": all_data[i][6],
-                "sum_mingguan_energi_turbin": all_data[i][7],
+            "value": {
+                "avg_mingguan_tegangan": all_data[i][4],
+                "avg_mingguan_arus": all_data[i][5],
+                "sum_mingguan_daya": all_data[i][6],
+                "sum_mingguan_energi": all_data[i][7],
             }
             }]
         hasil["value"].append(data[0])
@@ -654,10 +654,10 @@ def bulanan_suryaDC():
             WEEK(db_created_at) as week,
             MONTH(db_created_at) as month,
             YEAR(db_created_at) as year,
-            ROUND(AVG(voltage),2) as avg_bulanan_tegangan_suryaDC,
-            ROUND(AVG(current),2) as avg_bulanan_arus_suryaDC,
-            ROUND(SUM(power),2) as sum_bulanan_daya_suryaDC,
-            ROUND(SUM(energy),2) as sum_bulanan_energi_suryaDC,
+            ROUND(AVG(voltage),2) as avg_bulanan_tegangan,
+            ROUND(AVG(current),2) as avg_bulanan_arus,
+            ROUND(SUM(power),2) as sum_bulanan_daya,
+            ROUND(SUM(energy),2) as sum_bulanan_energi,
             client_id
             FROM {} 
             WHERE client_id = 6 
@@ -668,17 +668,17 @@ def bulanan_suryaDC():
     hasil = { 
         "suryaDC_id": 6, 
         "tahun": tahun,
-        "units": [{"avg_bulanan_tegangan_suryaDC": "V", "avg_bulanan_arus_suryaDC": "A", "sum_bulanan_daya_suryaDC": "W", "sum_bulanan_energi_suryaDC":"Wh"}],
+        "units": [{"avg_bulanan_tegangan": "V", "avg_bulanan_arus": "A", "sum_bulanan_daya": "W", "sum_bulanan_energi":"Wh"}],
         "value": []
         }   
     for i in range(0, len(all_data)):
         data = [{
             "bulan_ke": all_data[i][2],
-            "suryaDC": {
-                "avg_bulanan_tegangan_suryaDC": all_data[i][4],
-                "avg_bulanan_arus_suryaDC": all_data[i][5],
-                "sum_bulanan_daya_suryaDC": all_data[i][6],
-                "sum_bulanan_energi_suryaDC": all_data[i][7],
+            "value": {
+                "avg_bulanan_tegangan": all_data[i][4],
+                "avg_bulanan_arus": all_data[i][5],
+                "sum_bulanan_daya": all_data[i][6],
+                "sum_bulanan_energi": all_data[i][7],
             }
             }]
         hasil["value"].append(data[0])
@@ -696,10 +696,10 @@ def bulanan_suryaAC():
             WEEK(db_created_at) as week,
             MONTH(db_created_at) as month,
             YEAR(db_created_at) as year,
-            ROUND(AVG(voltage),2) as avg_bulanan_tegangan_suryaAC,
-            ROUND(AVG(current),2) as avg_bulanan_arus_suryaAC,
-            ROUND(SUM(power),2) as sum_bulanan_daya_suryaAC,
-            ROUND(SUM(energy),2) as sum_bulanan_energi_suryaAC,
+            ROUND(AVG(voltage),2) as avg_bulanan_tegangan,
+            ROUND(AVG(current),2) as avg_bulanan_arus,
+            ROUND(SUM(power),2) as sum_bulanan_daya,
+            ROUND(SUM(energy),2) as sum_bulanan_energi,
             client_id
             FROM {} 
             WHERE client_id = 7 
@@ -710,17 +710,17 @@ def bulanan_suryaAC():
     hasil = {  
         "suryaAC_id": 7,
         "tahun": tahun,
-        "units": [{"avg_bulanan_tegangan_suryaAC": "V", "avg_bulanan_arus_suryaAC": "A", "sum_bulanan_daya_suryaAC": "W", "sum_bulanan_energi_suryaAC":"Wh"}],
+        "units": [{"avg_bulanan_tegangan": "V", "avg_bulanan_arus": "A", "sum_bulanan_daya": "W", "sum_bulanan_energi":"Wh"}],
         "value": []
         }   
     for i in range(0, len(all_data)):
         data = [{
             "bulan_ke": all_data[i][2],
-            "suryaAC": {
-                "avg_bulanan_tegangan_suryaAC": all_data[i][4],
-                "avg_bulanan_arus_suryaAC": all_data[i][5],
-                "sum_bulanan_daya_suryaAC": all_data[i][6],
-                "sum_bulanan_energi_suryaAC": all_data[i][7],
+            "value": {
+                "avg_bulanan_tegangan": all_data[i][4],
+                "avg_bulanan_arus": all_data[i][5],
+                "sum_bulanan_daya": all_data[i][6],
+                "sum_bulanan_energi": all_data[i][7],
             }
             }]
         hasil["value"].append(data[0])
@@ -738,10 +738,10 @@ def bulanan_turbin():
             WEEK(db_created_at) as week,
             MONTH(db_created_at) as month,
             YEAR(db_created_at) as year,
-            ROUND(AVG(voltage),2) as avg_bulanan_tegangan_turbin,
-            ROUND(AVG(current),2) as avg_bulanan_arus_turbin,
-            ROUND(SUM(power),2) as sum_bulanan_daya_turbin,
-            ROUND(SUM(energy),2) as sum_bulanan_energi_turbin,
+            ROUND(AVG(voltage),2) as avg_bulanan_tegangan,
+            ROUND(AVG(current),2) as avg_bulanan_arus,
+            ROUND(SUM(power),2) as sum_bulanan_daya,
+            ROUND(SUM(energy),2) as sum_bulanan_energi,
             client_id
             FROM {} 
             WHERE client_id = 8 
@@ -752,17 +752,17 @@ def bulanan_turbin():
     hasil = { 
         "turbin_id": 8, 
         "tahun": tahun,
-        "units": [{"avg_bulanan_tegangan_turbin": "V", "avg_bulanan_arus_turbin": "A", "sum_bulanan_daya_turbin": "W", "sum_bulanan_energi_turbin":"Wh"}],
+        "units": [{"avg_bulanan_tegangan": "V", "avg_bulanan_arus": "A", "sum_bulanan_daya": "W", "sum_bulanan_energi":"Wh"}],
         "value": []
         }   
     for i in range(0, len(all_data)):
         data = [{
             "bulan_ke": all_data[i][2],
-            "turbin": {
-                "avg_bulanan_tegangan_turbin": all_data[i][4],
-                "avg_bulanan_arus_turbin": all_data[i][5],
-                "sum_bulanan_daya_turbin": all_data[i][6],
-                "sum_bulanan_energi_turbin": all_data[i][7],
+            "value": {
+                "avg_bulanan_tegangan": all_data[i][4],
+                "avg_bulanan_arus": all_data[i][5],
+                "sum_bulanan_daya": all_data[i][6],
+                "sum_bulanan_energi": all_data[i][7],
             }
             }]
         hasil["value"].append(data[0])
